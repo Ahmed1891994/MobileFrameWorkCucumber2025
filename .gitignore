@@ -1,0 +1,94 @@
+# Ignore the target directory (Maven build output)
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Ignore local configuration files
+*.properties
+*.env
+*.cfg
+
+# Ignore APK files (do not upload APKs to Git)
+*.apk
+
+# Ignore IDE-specific files
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+out/
+
+### Eclipse ###
+.settings/
+.classpath
+.project
+.factorypath
+.springBeans
+.sts4-cache
+bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+# Ignore build directories
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Ignore log files
+*.log
+logs/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore compiled files
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+# Ignore crash logs
+hs_err_pid*
+replay_pid*
+
+# Ignore dependency directories (if applicable)
+lib/
+dependencies/
+
+# Ignore test reports and screenshots
+test-output/
+surefire-reports/
+failsafe-reports/
+screenshots/
+reports/
+
+# Ignore local development files
+local.properties
+local.env
+
+# Ignore Maven wrapper (if not using)
+.mvn/
+mvnw
+mvnw.cmd
+
+# Ignore Node.js and npm files (if applicable)
+node_modules/
+npm-debug.log
+
+# Ignore Python virtual environments (if applicable)
+venv/
+.env/

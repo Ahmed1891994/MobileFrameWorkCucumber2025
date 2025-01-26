@@ -1,0 +1,22 @@
+{
+  "androidConfiguration": {
+    "appPackage": "android package - app has to be installed already on the device",
+    "appActivity": "android activity",
+    "adbExecuteTimeoutInMinutes": "integer, use 1-5 minutes",
+    "autoGrantPermissions": "Boolean, use True or False"
+  },
+  "iOSConfiguration": {
+    "path": "path to the app on mac machine",
+    "bundleId": "iOS package - app would be installed from path provided",
+    "platformVersion": "iPhone iOS version 17.0 - 18.0",
+    "udid": "device udid for the iPhone under test",
+    "wdaConnectionTimeoutInMinutes": "integer, use 5-15 minutes"
+  },
+  "driverConfiguration": {
+    "timeoutInSeconds": "integer, use 30-90 seconds",
+    "intervalInMillis": "integer, use 500-2000 seconds",
+    "waitForShortPeriodInSeconds": "integer, use 5-10 seconds",
+    "intervalForShortPeriodInMillis": "integer, use 500-2000 seconds",
+    "newCommandTimeoutInMinutes": "integer, use 1-5 minutes"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "validuserstandard": {
+    "username" : "bod@example.com",
+    "password" : "10203040"
+  },
+  "lockeduser": {
+    "username" : "bod@example.com",
+    "password" : "10203040"
+  },
+  "validuserpremium": {
+    "username" : "visual@example.com",
+    "password" : "10203040"
+  }
+}
