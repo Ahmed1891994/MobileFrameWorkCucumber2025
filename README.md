@@ -1,222 +1,97 @@
-# MobileFrameWorkCucumber2025
-
-## Test Automation Framework
-
-This README provides a step-by-step guide to setting up, configuring, and running the test automation framework for mobile applications on Android and iOS platforms. The framework uses Appium, Cucumber, and TestNG and supports both local execution and cross-platform testing on BrowserStack.
+# Mobile Cucumber Test Automation Framework
 
 ## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Frameworks Included](#frameworks-included)
+- [How To Work With It](#How-To-Work-With-It)
+- [Project Structure](#project-structure)
+- [How To Run](#how-to-run)
 
-- [Quick Start](#quick-start)
-- [Prerequisites](#prerequisites)
-- [Framework Setup](#framework-setup)
-- [Configuration](#configuration)
-  - [Android](#android-configuration)
-  - [iOS](#ios-configuration)
-  - [BrowserStack](#browserstack-configuration)
-- [Running Tests](#running-tests)
-  - [Local Execution](#local-execution)
-  - [BrowserStack Execution](#browserstack-execution)
-- [Test Data Management](#test-data-management)
-- [Logging and Reporting](#logging-and-reporting)
-- [Implementation](#More-Info-for-Implementation)
-- [Troubleshooting](#troubleshooting)
-- [FAQs](#faqs)
+## Features
+- Support BDD
+- Support Running Testing on Mobile Devices
+- Support Cross-Platform Testing (Android & iOS)
+- Support Running on BrowserStack
+- Generate Allure Report automatically after Test Execution with screenshots
+- Support being Dockerized
+- Support Logs using Logback
+- Support running on Jenkins Pipelines
 
-## Quick Start
+## Installation
+- Java(JDK) 23
+- IntelliJ IDEA / Eclipse
+- Maven
+- Allure
+- GIT
+- LogExpert
 
-Clone the repository:
+## Frameworks Included
+- Page Object Model (POM) design pattern
+- Factory Design Pattern
+- SOLID Principles
 
-```bash
-git clone <repository-url>
-cd <repository-folder>
-```
+## How To Work With It
+### Adding new screen:
 
-Install dependencies:
+1. In `src/test/java/Screens` package:
+    1. Add screen elements to `elements` package as `List<Locator>`, each `Locator` object represents a method of
+       locating an element.
+    2. Add required actions to `actions` package, those should be reusable and uncoupled.
+    3. If the screen is just a screen fragment/component add both `elements` and `actions` to the same file and add it
+       to the `screens` package root.
 
-```bash
-mvn clean install
-```
+2. In `screens.elements` package:
+    1. Elements class should be named `*Elements` e.g. `SignInElements`.
+    2. Locators could be assigned as a Property with the signature of `public List<Locator> element = List.of();`, which
+       would produce a static list.
+    3. Locators could be assigned as a Function with the signature of
+       `public List<Locator> element(Object object){ return List.of() }`, so you can pass any object like `String` or
+       `Integer` to use it with dynamic locators.
+    4. Locator object has `enum` of `Strategy` which is platform oriented, proper strategy has to be picked up.
 
-Update configurations:
+3. In `screens.actions` package:
+    1. Actions class should be named `*Screen`, `*Player` or `*Layover` e.g. `SignInScreen`.
+    2. It should handle any action that would be passed to `definitions` to be used as is, it should contain the logic.
 
-- Modify `src/test/resources/Configuration.json` for local execution.
-- Modify `src/test/resources/browserstack_example.yml` for BrowserStack execution.
+### Adding new cases
 
-Run tests locally:
+1. In `features` folder under `resources`:
+    1. Create a `.feature` file for each feature that would be tested.
+    2. In this file add test cases flow using already-existing/new steps.
+    3. Add test name as per TestRail, add testcase ids as tags, testcase id from TestRail starts with `C` e.g. `C123456`
+       it should be `@C123456` as a testcase tag.
+    4. Add feature name per TestRail folder name as a tag e.g. `@SignIn`
+    5. Add testing type e.g. `@Regression` or `@Sanity`
+2. In `definitions` package:
+    1. Add the corresponding new steps that need implementation.
 
-```bash
-mvn test
-```
+## Project Structure
+### `src/test/java`
+- **configurations/** → Contains base classes for setting up configurations for driver and platform configurations.
+- **context/** → Manages test execution context, including data sharing between steps and maintaining session information.
+- **Data/** → Stores user-related test data.
+- **Driver/** → Manages WebDriver initialization, configuration, and handling across test cases.
+- **Runner/** → Contains test runners for executing test suites using Cucumber.
+- **Screens/** → Implements the Page Object Model (POM) by defining screen elements and actions for mobile UI interactions.
+- **StepDefinition/** → Implements Cucumber step definitions, linking Gherkin steps to actual test execution logic.
+- **Utils/** → Provides helper classes for logging, reporting, and common utility functions.
 
-Run tests on BrowserStack:
+### `src/test/resources`
+- **features/** → Contains feature files written in Gherkin syntax for behavior-driven testing.
+- **TestData/** → Stores environment-specific test data and configuration files for parameterized test execution.
 
-```bash
-mvn test -Dbrowserstack=true
-```
+### `pom.xml`
+- Manages dependencies for Appium, Cucumber, TestNG, Logback, Browserstack, and Allure.
 
-## Prerequisites
+### `logback.xml`
+- Defines logging configurations.
 
-Before you begin, ensure the following are installed:
+### `Configuration_example.json`
+- Holds environment-specific configurations such as general driver configs, android, and iOS specific configs.
 
-- **Java Development Kit (JDK):** Version 11 or higher.
-- **Maven:** For dependency management.
-- **Appium:** Version 2.x or higher.
-- **Android SDK:** (for Android testing).
-- **Xcode:** (for iOS testing on macOS).
-- **Node.js:** Required for Appium and BrowserStack Local.
-- **BrowserStack Account:** (optional, for cross-platform testing).
+## How To Run
+### Run Locally
 
-## Framework Setup
 
-Clone the repository:
-
-```bash
-git clone <repository-url>
-```
-
-Install dependencies:
-
-```bash
-mvn clean install
-```
-
-Set up Appium:
-
-```bash
-npm install -g appium
-```
-
-Set up BrowserStack (optional):
-
-```bash
-npm install -g browserstack-local
-```
-
-Update `browserstack_example.yml` with your BrowserStack credentials.
-
-## Configuration
-
-### Android Configuration
-
-Update `src/test/resources/Configuration.json` with your Android app details:
-
-```json
-"androidConfiguration": {
-  "appPackage": "com.example.app",
-  "appActivity": "com.example.app.MainActivity",
-  "adbExecuteTimeoutInMinutes": 5,
-  "autoGrantPermissions": true
-}
-```
-
-### iOS Configuration
-
-Update `src/test/resources/Configuration.json` with your iOS app details:
-
-```json
-"iOSConfiguration": {
-  "path": "/path/to/your/app.ipa",
-  "bundleId": "com.example.app",
-  "platformVersion": "17.0",
-  "udid": "your-device-udid",
-  "wdaConnectionTimeoutInMinutes": 10
-}
-```
-
-### BrowserStack Configuration
-
-Update `src/test/resources/browserstack_example.yml` with your BrowserStack credentials and desired devices:
-
-```yaml
-userName: "your-username"
-accessKey: "your-access-key"
-platforms:
-  - deviceName: "Samsung Galaxy S24 Ultra"
-    platformVersion: "14.0"
-    platformName: "android"
-```
-
-## Running Tests
-
-### Local Execution
-
-```bash
-mvn test
-```
-
-### BrowserStack Execution
-
-```bash
-mvn test -Dbrowserstack=true
-```
-
-## Test Data Management
-
-Test data is stored in JSON files under `src/test/resources/TestData`.
-
-Example:
-
-```json
-{
-  "validuserstandard": {
-    "username": "standard_user",
-    "password": "secret_sauce"
-  }
-}
-```
-
-## Logging and Reporting
-
-- **Logs:** Stored in the `logs` directory.
-- **Reports:** Cucumber and Extent Reports generated in `target/cucumber`.
-
-## More Info for Implementation
-
-### Adding a New Screen
-
-1. Add screen elements to `elements` package.
-2. Implement required actions in `actions` package.
-3. Add screen fragments/components in `screens` package.
-4. Handle popups in `dismissible` package with `dismiss()` method.
-
-### Running Automation Suite
-
-Command Line Arguments:
-
-- `-Denvironment`: `local`, `browserstack` (mandatory).
-- `-Dplatform`: `android`, `ios` (mandatory).
-- `-Dapp`: BrowserStack app URL.
-- `-DtestRunId`: Optional TestRail Run Id.
-- `-Dcucumber.filter.tags`: Feature or test type tags.
-
-Example commands:
-
-```bash
-mvn clean test -Denvironment=local -Dplatform=android -Dcucumber.filter.tags="@Regression"
-```
-
-## Troubleshooting
-
-### Appium Server Not Starting
-
-```bash
-lsof -i :4723
-kill -9 <pid>
-```
-
-### BrowserStack Connection Issues
-
-```bash
-browserstack-local --key <your-access-key>
-```
-
-### Element Not Found
-
-- Check locators.
-- Increase timeout in `driverConfiguration`.
-
-## FAQs
-
-- **How to add a new test scenario?** Add a feature file and implement steps.
-- **How to run tests in parallel?** Set `parallelsPerPlatform` in `browserstack_example.yml`.
-- **Where are screenshots saved?** In the `ScreenShots` directory.
+### Run on BrowserStack

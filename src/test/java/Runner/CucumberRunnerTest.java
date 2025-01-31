@@ -14,8 +14,7 @@ import org.testng.annotations.DataProvider;
                 "summary", // Summary of test results
                 "html:target/cucumber/report.html", // HTML report
                 "json:target/cucumber/report.json", // JSON report
-                "junit:target/cucumber/report.xml", // JUnit XML report
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" // Extent Reports
+                "junit:target/cucumber/report.xml" // JUnit XML report
         }
 )
 public class CucumberRunnerTest extends AbstractTestNGCucumberTests {

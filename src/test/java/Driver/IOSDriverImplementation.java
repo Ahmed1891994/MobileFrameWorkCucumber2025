@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -50,8 +51,10 @@ public class IOSDriverImplementation implements Driver {
     private URL createAppiumServerUrl() {
         try {
             logger.debug("Creating Appium server URL for localhost:4723");
-            return new URL("http://127.0.0.1:4723/wd/hub");
-        } catch (MalformedURLException e) {
+            // Use URI to construct the URL
+            URI uri = new URI("http", null, "127.0.0.1", 4723, "/wd/hub", null, null);
+            return uri.toURL(); // Convert URI to URL
+        } catch (Exception e) {
             logger.error("Failed to create Appium server URL. Invalid URL format.", e);
             throw new RuntimeException("Invalid Appium server URL", e);
         }

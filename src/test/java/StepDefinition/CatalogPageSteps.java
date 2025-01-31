@@ -17,6 +17,5 @@ public class CatalogPageSteps {
     @Given("User is in Catalog Page")
     public void userIsInCatalogPage() {
         Assert.assertTrue(catalogPageActions.isInScreen());
-
     }
 }

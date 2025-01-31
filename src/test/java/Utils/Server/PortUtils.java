@@ -17,9 +17,8 @@ public class PortUtils {
      *
      * @param port The port number to free.
      * @throws IOException If an I/O error occurs.
-     * @throws InterruptedException If the process is interrupted.
      */
-    public static void freePort(int port) throws IOException, InterruptedException {
+    public static void freePort(int port) throws IOException {
         logger.debug("Attempting to free port: {}", port);
 
         String os = System.getProperty("os.name").toLowerCase();
@@ -44,32 +43,33 @@ public class PortUtils {
      *
      * @param port The port number to free.
      * @throws IOException If an I/O error occurs.
-     * @throws InterruptedException If the process is interrupted.
      */
-    private static void freePortOnWindows(int port) throws IOException, InterruptedException {
+    private static void freePortOnWindows(int port) throws IOException {
         logger.debug("Finding process using port {} on Windows.", port);
 
         // Find the process ID (PID) using the port
-        Process process = Runtime.getRuntime().exec("netstat -ano | findstr :" + port);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        String pid = null;
+        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "netstat -ano | findstr :" + port);
+        Process process = builder.start();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line;
+            String pid = null;
 
-        while ((line = reader.readLine()) != null) {
-            if (line.contains("LISTENING")) {
-                String[] parts = line.trim().split("\\s+");
-                pid = parts[parts.length - 1]; // The last part is the PID
-                break;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("LISTENING")) {
+                    String[] parts = line.trim().split("\\s+");
+                    pid = parts[parts.length - 1]; // The last part is the PID
+                    break;
+                }
             }
-        }
 
-        if (pid != null) {
-            logger.debug("Found process with PID {} using port {}. Terminating process.", pid, port);
-            // Terminate the process
-            Runtime.getRuntime().exec("taskkill /PID " + pid + " /F");
-            logger.info("Terminated process with PID: {}", pid);
-        } else {
-            logger.warn("No process found using port: {}", port);
+            if (pid != null) {
+                logger.debug("Found process with PID {} using port {}. Terminating process.", pid, port);
+                // Terminate the process
+                new ProcessBuilder("taskkill", "/PID", pid, "/F").start();
+                logger.info("Terminated process with PID: {}", pid);
+            } else {
+                logger.warn("No process found using port: {}", port);
+            }
         }
     }
 
@@ -78,33 +78,24 @@ public class PortUtils {
      *
      * @param port The port number to free.
      * @throws IOException If an I/O error occurs.
-     * @throws InterruptedException If the process is interrupted.
      */
-    private static void freePortOnUnix(int port) throws IOException, InterruptedException {
+    private static void freePortOnUnix(int port) throws IOException {
         logger.debug("Finding process using port {} on Unix.", port);
 
         // Find the process ID (PID) using the port
-        Process process = Runtime.getRuntime().exec("lsof -t -i:" + port);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String pid = reader.readLine();
+        ProcessBuilder builder = new ProcessBuilder("sh", "-c", "lsof -t -i:" + port);
+        Process process = builder.start();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String pid = reader.readLine();
 
-        if (pid != null) {
-            logger.debug("Found process with PID {} using port {}. Terminating process.", pid, port);
-            // Terminate the process
-            Runtime.getRuntime().exec("kill -9 " + pid);
-            logger.info("Terminated process with PID: {}", pid);
-        } else {
-            logger.warn("No process found using port: {}", port);
-        }
-    }
-
-    public static void main(String[] args) {
-        int port = 8080; // Replace with the port you want to free
-        try {
-            logger.info("Attempting to free port: {}", port);
-            freePort(port);
-        } catch (IOException | InterruptedException e) {
-            logger.error("Failed to free port {}: {}", port, e.getMessage(), e);
+            if (pid != null) {
+                logger.debug("Found process with PID {} using port {}. Terminating process.", pid, port);
+                // Terminate the process
+                new ProcessBuilder("kill", "-9", pid).start();
+                logger.info("Terminated process with PID: {}", pid);
+            } else {
+                logger.warn("No process found using port: {}", port);
+            }
         }
     }
 }
