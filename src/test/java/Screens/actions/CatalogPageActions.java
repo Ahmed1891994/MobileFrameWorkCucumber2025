@@ -37,7 +37,7 @@ public class CatalogPageActions extends CatalogPageElements {
 
     public String getPriceOfProduct(String productName)
     {
-        return driver.findElement(elements.priceOfPruduct(productName)).getText().replaceAll("[^0-9.]","");
+        return driver.findElement(elements.priceOfProduct(productName)).getText().replaceAll("[^0-9.]","");
     }
 
     public void sortBy(String type,String order)

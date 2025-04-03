@@ -21,6 +21,9 @@ public class Context {
     // ThreadLocal for test data
     private static final ThreadLocal<Map<String, Object>> testData = ThreadLocal.withInitial(HashMap::new);
 
+    // ThreadLocal for context attribute
+    private static final ThreadLocal<HashMap<ContextAttribute, Object>> objects = ThreadLocal.withInitial(HashMap::new);
+
     /**
      * Gets the current platform from system properties.
      *
@@ -152,11 +155,42 @@ public class Context {
     }
 
     /**
+     * set attribute and save it to context
+     */
+    public void setAttribute(ContextAttribute key, Object value) {
+        Context.objects.get().put(key,value);
+    }
+
+    /**
+     * get attribute saved
+     */
+    public Object getAttribute(ContextAttribute key) {
+        return Context.objects.get().get(key);
+    }
+
+    /**
+     * clear all attributes and hashmap
+     */
+    public void clearAttributes() {
+        Context.objects.get().clear();
+        Context.objects.remove();
+    }
+
+    /**
      * Clears test data for the current thread.
      */
     public void clearTestData() {
         logger.debug("Clearing test data for current thread");
         testData.set(new HashMap<>()); // Clear the Map by replacing it with a new one
         testData.remove(); // Remove the ThreadLocal value for the current thread
+    }
+
+    /**
+     * Destroy all data in the thread
+     */
+    public void destroy() {
+        removeDriver();
+        removeConfiguration();
+        clearAttributes();
     }
 }

@@ -24,6 +24,7 @@ public class Configuration {
     private AndroidConfiguration androidConfiguration;
     private iOSConfiguration iOSConfiguration;
     private DriverConfiguration driverConfiguration;
+    private ScreenShotConfiguration screenShotConfiguration;
 
     public Configuration readConfigurations() {
         Gson gson = new Gson();

@@ -3,6 +3,7 @@ package Driver;
 import Context.Context;
 import Utils.Enums.Direction;
 import Utils.Enums.Environment;
+import Utils.Locator.Element;
 import Utils.Locator.Locator;
 import Utils.helpers.Scroller;
 import io.appium.java_client.ios.IOSDriver;
@@ -83,14 +84,14 @@ public class IOSDriverImplementation implements Driver {
         }
     }
 
-    private Optional<WebElement> findWithTimeoutAndInterval(List<Locator> locators, Duration timeout, Duration interval) {
+    private Optional<WebElement> findWithTimeoutAndInterval(Element locators, Duration timeout, Duration interval) {
         logger.debug("Attempting to find element with timeout: {} and polling interval: {}", timeout, interval);
         wait.withTimeout(timeout)
                 .pollingEvery(interval)
                 .ignoring(NoSuchElementException.class)
                 .ignoring(TimeoutException.class);
 
-        return locators.stream()
+        return locators.getLocators().stream()
                 .filter(locator -> Platform.IOS.is(locator.getStrategy().getPlatform()))
                 .map(locator -> {
                     try {
@@ -106,7 +107,7 @@ public class IOSDriverImplementation implements Driver {
     }
 
     @Override
-    public WebElement findElement(List<Locator> locators) {
+    public WebElement findElement(Element locators) {
         logger.debug("Finding element with default timeout and interval");
         return findWithTimeoutAndInterval(
                 locators,
@@ -119,7 +120,7 @@ public class IOSDriverImplementation implements Driver {
     }
 
     @Override
-    public WebElement findInShortPeriod(List<Locator> locators) {
+    public WebElement findInShortPeriod(Element locators) {
         logger.debug("Finding element with short timeout and interval");
         return findWithTimeoutAndInterval(
                 locators,
@@ -129,25 +130,25 @@ public class IOSDriverImplementation implements Driver {
     }
 
     @Override
-    public boolean isDisplayed(List<Locator> locators) {
+    public boolean isDisplayed(Element locators) {
         logger.debug("Checking if element is displayed using locators: {}", locators);
         return findElement(locators).isDisplayed();
     }
 
     @Override
-    public boolean isNegligentlyDisplayed(List<Locator> locators) {
+    public boolean isNegligentlyDisplayed(Element locators) {
         logger.debug("Checking if element is negligently displayed using locators: {}", locators);
         return findInShortPeriod(locators) != null;
     }
 
     @Override
-    public void scrollTo(List<Locator> target, Direction direction, List<Locator> container) {
+    public void scrollTo(Element target, Direction direction, Element container) {
         logger.debug("Scrolling to target element in direction: {} with container: {}", direction, container);
         new Scroller().scrollTo(this, target, direction, container);
     }
 
     @Override
-    public void scrollTo(List<Locator> target, Direction direction) {
+    public void scrollTo(Element target, Direction direction) {
         logger.debug("Scrolling to target element in direction: {}", direction);
         scrollTo(target, direction, null);
     }
@@ -198,73 +199,77 @@ public class IOSDriverImplementation implements Driver {
         }
     }
 
-    /**
-     * Takes a screenshot of the current mobile screen, attaches it to the Cucumber scenario,
-     * and saves it to the file system.
-     * The screenshot is embedded in the Cucumber report as a PNG image and saved to a specified location.
-     *
-     * @param scenario The Cucumber scenario to which the screenshot will be attached.
-     */
+//    /**
+//     * Takes a screenshot of the current mobile screen, attaches it to the Cucumber scenario,
+//     * and saves it to the file system.
+//     * The screenshot is embedded in the Cucumber report as a PNG image and saved to a specified location.
+//     *
+//     * @param scenario The Cucumber scenario to which the screenshot will be attached.
+//     */
+//    @Override
+//    public void takeScreenShot(Scenario scenario) {
+//        // Initialize logger for this class
+//        Logger logger = LoggerFactory.getLogger(this.getClass());
+//
+//        // Log the start of the screenshot process
+//        logger.debug("Taking screenshot for scenario: {}", scenario.getName());
+//
+//        // Capture the screenshot as a byte array
+//        byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+//
+//        // Attach the screenshot to the Cucumber scenario
+//        scenario.attach(screenshot, "image/png", scenario.getName());
+//        logger.info("Screenshot attached to scenario: {}", scenario.getName());
+//
+//        // Save the screenshot to the file system
+//        saveScreenshotToFileSystem(scenario.getName());
+//    }
+//
+//    /**
+//     * Saves the screenshot to the file system with a dynamically generated file name.
+//     *
+//     * @param scenarioName The name of the scenario (used in the file name).
+//     */
+//    private void saveScreenshotToFileSystem(String scenarioName) {
+//        Logger logger = LoggerFactory.getLogger(this.getClass());
+//
+//        // Capture the screenshot as a file
+//        File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//
+//        // Get current time and date for the screenshot file name
+//        String time = LocalTime.now().toString().replace(":", "-").substring(0, 5);
+//        String date = LocalDate.now().toString();
+//        logger.debug("Saving screenshot with time -> {} and date -> {}", time, date);
+//
+//        // Define the destination path for the screenshot
+//        String destination = System.getProperty("user.dir") + File.separator + "ScreenShots" + File.separator + date
+//                + "_" + time + File.separator + scenarioName + "_" + ThreadLocalRandom.current().nextInt() + ".png";
+//
+//        try {
+//            // Create the directory if it doesn't exist
+//            File directory = new File(destination).getParentFile();
+//            if (!directory.exists()) {
+//                boolean dirCreated = directory.mkdirs();
+//                if (dirCreated) {
+//                    logger.debug("Created directory: {}", directory.getAbsolutePath());
+//                } else {
+//                    logger.error("Failed to create directory: {}", directory.getAbsolutePath());
+//                }
+//            }
+//
+//            // Copy the screenshot file to the destination
+//            logger.debug("Copying screenshot to destination: {}", destination);
+//            FileUtils.copyFile(source, new File(destination));
+//            logger.info("Screenshot saved to: {}", destination);
+//        } catch (IOException e) {
+//            logger.error("Failed to save screenshot to destination: {}", destination, e);
+//        }
+//    }
+
     @Override
-    public void takeScreenShot(Scenario scenario) {
-        // Initialize logger for this class
-        Logger logger = LoggerFactory.getLogger(this.getClass());
-
-        // Log the start of the screenshot process
-        logger.debug("Taking screenshot for scenario: {}", scenario.getName());
-
-        // Capture the screenshot as a byte array
-        byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-
-        // Attach the screenshot to the Cucumber scenario
-        scenario.attach(screenshot, "image/png", scenario.getName());
-        logger.info("Screenshot attached to scenario: {}", scenario.getName());
-
-        // Save the screenshot to the file system
-        saveScreenshotToFileSystem(scenario.getName());
+    public byte[] takeScreenShot() {
+        return  ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
-
-    /**
-     * Saves the screenshot to the file system with a dynamically generated file name.
-     *
-     * @param scenarioName The name of the scenario (used in the file name).
-     */
-    private void saveScreenshotToFileSystem(String scenarioName) {
-        Logger logger = LoggerFactory.getLogger(this.getClass());
-
-        // Capture the screenshot as a file
-        File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
-        // Get current time and date for the screenshot file name
-        String time = LocalTime.now().toString().replace(":", "-").substring(0, 5);
-        String date = LocalDate.now().toString();
-        logger.debug("Saving screenshot with time -> {} and date -> {}", time, date);
-
-        // Define the destination path for the screenshot
-        String destination = System.getProperty("user.dir") + File.separator + "ScreenShots" + File.separator + date
-                + "_" + time + File.separator + scenarioName + "_" + ThreadLocalRandom.current().nextInt() + ".png";
-
-        try {
-            // Create the directory if it doesn't exist
-            File directory = new File(destination).getParentFile();
-            if (!directory.exists()) {
-                boolean dirCreated = directory.mkdirs();
-                if (dirCreated) {
-                    logger.debug("Created directory: {}", directory.getAbsolutePath());
-                } else {
-                    logger.error("Failed to create directory: {}", directory.getAbsolutePath());
-                }
-            }
-
-            // Copy the screenshot file to the destination
-            logger.debug("Copying screenshot to destination: {}", destination);
-            FileUtils.copyFile(source, new File(destination));
-            logger.info("Screenshot saved to: {}", destination);
-        } catch (IOException e) {
-            logger.error("Failed to save screenshot to destination: {}", destination, e);
-        }
-    }
-
 
     @Override
     public void quit() {

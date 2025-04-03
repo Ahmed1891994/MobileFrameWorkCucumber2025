@@ -1,0 +1,27 @@
+{
+  "androidConfiguration": {
+    "appPackage": "com.saucelabs.mydemoapp.android",
+    "appActivity": "com.saucelabs.mydemoapp.android.view.activities.SplashActivity",
+    "adbExecuteTimeoutInMinutes": 2,
+    "autoGrantPermissions": true
+  },
+  "iOSConfiguration": {
+    "path": "src",
+    "bundleId": "5",
+    "platformVersion": "18.0",
+    "udid": "55",
+    "wdaConnectionTimeoutInMinutes": "5"
+  },
+  "driverConfiguration": {
+    "timeoutInSeconds": 30,
+    "intervalInMillis": 500,
+    "waitForShortPeriodInSeconds": 10,
+    "intervalForShortPeriodInMillis": 500,
+    "newCommandTimeoutInMinutes": 3
+  },
+  "screenShotConfiguration": {
+    "ScreenshotStorage": "LOCAL",
+    "ScreenshotTrigger": "ON_EVERY_STEP",
+    "ScreenshotDirectory": "./test-results/screenshots"
+  }
+}

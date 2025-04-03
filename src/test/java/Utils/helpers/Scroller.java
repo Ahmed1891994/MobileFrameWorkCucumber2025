@@ -2,6 +2,7 @@ package Utils.helpers;
 
 import Driver.Driver;
 import Utils.Enums.Direction;
+import Utils.Locator.Element;
 import Utils.Locator.Locator;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -25,7 +26,7 @@ public class Scroller {
      * @param direction The direction to scroll.
      * @param container The container locators (optional).
      */
-    public void scrollTo(Driver driver, List<Locator> target, Direction direction, List<Locator> container) {
+    public void scrollTo(Driver driver, Element target, Direction direction, Element container) {
         logger.debug("Attempting to scroll to target element in direction: {}", direction);
         WebElement element = driver.findInShortPeriod(target);
         if (element != null) {
@@ -63,8 +64,8 @@ public class Scroller {
      * @param container The container locators (optional).
      * @return The size of the container or screen.
      */
-    private Dimension getContainerSize(Driver driver, List<Locator> container) {
-        Dimension size = (container != null && !container.isEmpty()) ? driver.findElement(container).getSize()
+    private Dimension getContainerSize(Driver driver, Element container) {
+        Dimension size = (container != null && !container.getLocators().isEmpty()) ? driver.findElement(container).getSize()
                 : driver.getScreenSize();
         logger.debug("Retrieved container size: {}", size);
         return size;
@@ -77,8 +78,8 @@ public class Scroller {
      * @param container The container locators (optional).
      * @return The origin point of the container or screen.
      */
-    private Point getOriginPoint(Driver driver, List<Locator> container) {
-        Point origin = (container != null && !container.isEmpty()) ? driver.findElement(container).getLocation()
+    private Point getOriginPoint(Driver driver, Element container) {
+        Point origin = (container != null && !container.getLocators().isEmpty()) ? driver.findElement(container).getLocation()
                 : new Point(0, 0);
         logger.debug("Retrieved origin point: {}", origin);
         return origin;

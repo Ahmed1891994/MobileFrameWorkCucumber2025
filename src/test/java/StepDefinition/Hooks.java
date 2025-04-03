@@ -6,6 +6,7 @@ import Driver.Driver;
 import Driver.DriverFactory;
 import Utils.Enums.Environment;
 import Utils.Server.LocalServer;
+import Utils.helpers.ScreenshotManager;
 import io.cucumber.java.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ public class Hooks {
     private static LocalServer server;
     private final Context context;
     private Driver driver;
+    private ScreenshotManager screenshotManager;
+
     public Hooks(Context context) {
         this.context = context;
         logger.debug("Hooks initialized with context: {}", context);
@@ -49,6 +52,10 @@ public class Hooks {
         context.setDriver(driver);
         logger.info("Driver initialized successfully for the scenario");
         logger.info("Starting execution of scenario: {}", scenario.getName());
+
+        // Initialize ScreenshotManager
+        screenshotManager = new ScreenshotManager(context);
+        logger.info("screenshotManager initialized successfully for the scenario");
     }
 
     /**
@@ -60,14 +67,13 @@ public class Hooks {
         driver = context.getDriver();
         if (driver != null) {
             if (scenario.isFailed()) {
-                driver.takeScreenShot(scenario);
+                screenshotManager.captureIfRequired(scenario);
             }
             driver.quit();
         }
 
         logger.info("Cleaning up configuration and driver after the scenario");
-        context.removeConfiguration();
-        context.removeDriver();
+        context.destroy();
         logger.info("Configuration and driver cleanup completed");
     }
 
@@ -83,5 +89,11 @@ public class Hooks {
         } else {
             logger.info("Skipping local server cleanup for non-LOCAL environment");
         }
+    }
+
+    @AfterStep
+    public void afterStep(Scenario scenario) {
+        // Trigger screenshot for every step (handled internally by ScreenshotManager)
+        screenshotManager.captureIfRequired(scenario);
     }
 }

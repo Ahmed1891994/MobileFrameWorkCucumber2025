@@ -18,5 +18,10 @@
     "waitForShortPeriodInSeconds": "integer, use 5-10 seconds",
     "intervalForShortPeriodInMillis": "integer, use 500-2000 seconds",
     "newCommandTimeoutInMinutes": "integer, use 1-5 minutes"
+  },
+  "screenShotConfiguration": {
+    "ScreenshotStorage": "string, use REPORT or LOCAL or BOTH",
+    "ScreenshotTrigger": "string, ON_FAILURE or ON_EVERY_STEP",
+    "ScreenshotDirectory": "path"
   }
 }

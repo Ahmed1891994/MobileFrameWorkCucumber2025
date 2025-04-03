@@ -1,6 +1,7 @@
 package Driver;
 
 import Utils.Enums.Direction;
+import Utils.Locator.Element;
 import Utils.Locator.Locator;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.Dimension;
@@ -11,17 +12,17 @@ import java.util.Collection;
 import java.util.List;
 
 public interface Driver {
-        WebElement findElement(List<Locator> locators);
+        WebElement findElement(Element locators);
 
-        WebElement findInShortPeriod(List<Locator> locators);
+        WebElement findInShortPeriod(Element locators);
 
-        public boolean isDisplayed(List<Locator> locators);
+        public boolean isDisplayed(Element locators);
 
-        public boolean isNegligentlyDisplayed(List<Locator> locators);
+        public boolean isNegligentlyDisplayed(Element locators);
 
-        public void scrollTo(List<Locator> target, Direction direction, List<Locator> container);
+        public void scrollTo(Element target, Direction direction, Element container);
 
-        public void scrollTo(List<Locator> target,Direction direction);
+        public void scrollTo(Element target,Direction direction);
 
         public String getPageSource();
 
@@ -33,7 +34,7 @@ public interface Driver {
 ;
         public void acceptAlert();
 
-        public void takeScreenShot(Scenario scenario);
+        public byte[] takeScreenShot();
 
         void quit();
 }

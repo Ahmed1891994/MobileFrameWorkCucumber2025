@@ -1,104 +1,105 @@
 package Screens.elements;
 
+import Utils.Locator.Element;
 import Utils.Locator.Locator;
 import Utils.Locator.Strategy;
 
 import java.util.List;
 
 public class CheckoutPageElements {
-    public List<Locator> title = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/checkoutTitleTV")
-    );
+    public Element title = new Element("checkoutTitle", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/checkoutTitleTV")
+    ));
 
-    public List<Locator> fullNameInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/fullNameET")
-    );
+    public Element fullNameInput = new Element("fullNameInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/fullNameET")
+    ));
 
-    public List<Locator> fullNameErrorLabel = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/fullNameErrorTV")
-    );
+    public Element fullNameErrorLabel = new Element("fullNameErrorLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/fullNameErrorTV")
+    ));
 
-    public List<Locator> address1Input = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/address1ET")
-    );
+    public Element address1Input = new Element("address1Input", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/address1ET")
+    ));
 
-    public List<Locator> address1ErrorLabel= List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/address1ErrorTV")
-    );
+    public Element address1ErrorLabel = new Element("address1ErrorLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/address1ErrorTV")
+    ));
 
-    public List<Locator> address2Input = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/address2ET")
-    );
+    public Element address2Input = new Element("address2Input", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/address2ET")
+    ));
 
-    public List<Locator> cityInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/cityET")
-    );
+    public Element cityInput = new Element("cityInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/cityET")
+    ));
 
-    public List<Locator> cityErrorLabel= List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/cityErrorTV")
-    );
+    public Element cityErrorLabel = new Element("cityErrorLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/cityErrorTV")
+    ));
 
-    public List<Locator> stateInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/stateET")
-    );
+    public Element stateInput = new Element("stateInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/stateET")
+    ));
 
-    public List<Locator> zipInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/zipET")
-    );
+    public Element zipInput = new Element("zipInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/zipET")
+    ));
 
-    public List<Locator> zipErrorLabel= List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/zipErrorTV")
-    );
+    public Element zipErrorLabel = new Element("zipErrorLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/zipErrorTV")
+    ));
 
-    public List<Locator> countryInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/countryET")
-    );
+    public Element countryInput = new Element("countryInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/countryET")
+    ));
 
-    public List<Locator> countryErrorLabel= List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/countryErrorTV")
-    );
+    public Element countryErrorLabel = new Element("countryErrorLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/countryErrorTV")
+    ));
 
-    public List<Locator> checkoutPaymentButton = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/checkoutTitleTV")
-    );
+    public Element checkoutPaymentButton = new Element("checkoutPaymentButton", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/checkoutTitleTV")
+    ));
 
-    public List<Locator> cardFullNameInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/nameET")
-    );
+    public Element cardFullNameInput = new Element("cardFullNameInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/nameET")
+    ));
 
-    public List<Locator> cardNumberInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/cardNumberET")
-    );
+    public Element cardNumberInput = new Element("cardNumberInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/cardNumberET")
+    ));
 
-    public List<Locator> cardExpirationDateInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/expirationDateET")
-    );
+    public Element cardExpirationDateInput = new Element("cardExpirationDateInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/expirationDateET")
+    ));
 
-    public List<Locator> cardSecurityCodeInput = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/securityCodeET")
-    );
+    public Element cardSecurityCodeInput = new Element("cardSecurityCodeInput", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/securityCodeET")
+    ));
 
-    public List<Locator> cardPaymentButton = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/paymentBtn")
-    );
+    public Element cardPaymentButton = new Element("cardPaymentButton", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/paymentBtn")
+    ));
 
-    public List<Locator> billingAddressCheckBox = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.com.saucelabs.mydemoapp.android:id/billingAddressCB")
-    );
+    public Element billingAddressCheckBox = new Element("billingAddressCheckBox", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/billingAddressCB")
+    ));
 
-    public List<Locator> reviewYourOrderLabel = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/enterShippingAddressTV")
-    );
+    public Element reviewYourOrderLabel = new Element("reviewYourOrderLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/enterShippingAddressTV")
+    ));
 
-    public List<Locator> checkoutCompleteLabel = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/completeTV")
-    );
+    public Element checkoutCompleteLabel = new Element("checkoutCompleteLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/completeTV")
+    ));
 
-    public List<Locator> statusLabel = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/swagTV")
-    );
+    public Element statusLabel = new Element("statusLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/swagTV")
+    ));
 
-    public List<Locator> continueShoppingLabel = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/shoopingBt")
-    );
+    public Element continueShoppingLabel = new Element("continueShoppingLabel", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/shoopingBt")
+    ));
 }

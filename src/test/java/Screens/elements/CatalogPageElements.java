@@ -1,44 +1,44 @@
 package Screens.elements;
 
+import Utils.Locator.Element;
 import Utils.Locator.Locator;
 import Utils.Locator.Strategy;
 import java.util.List;
 
 public class CatalogPageElements {
-    public List<Locator> sortButton = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/sortIV")
-    );
+    public Element sortButton = new Element("sortButton", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/sortIV")
+    ));
 
-    public List<Locator> productTitle = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/productTV")
-    );
+    public Element productTitle = new Element("productTitle", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/productTV")
+    ));
 
-    public List<Locator> productByName(String productName) {
-        return List.of(
-                new Locator(Strategy.ANDROID_XPATH, String.format("//android.widget.TextView[@content-desc=\"Product Title\" and @text=%s]/preceding-sibling::android.widget.ImageView", productName))
-        );
+    public Element productByName(String productName) {
+        return new Element(String.format("productByName %s", productName), List.of(
+                new Locator(Strategy.ANDROID_XPATH, String.format("//android.widget.TextView[@content-desc=\"Product Title\" and @text=\"%s\"] /preceding-sibling::android.widget.ImageView", productName))
+        ));
     }
 
-    public List<Locator> productByPartOfName(String productName) {
-        return List.of(
+    public Element productByPartOfName(String productName) {
+        return new Element(String.format("productByPartOfName %s", productName), List.of(
                 new Locator(Strategy.ANDROID_XPATH, String.format("//android.widget.TextView[@content-desc=\"Product Title\" and contains(@text, \"%s\")]/preceding-sibling::android.widget.ImageView", productName))
-        );
+        ));
     }
 
-    public List<Locator> priceOfPruduct(String productName) {
-        return List.of(
-                new Locator(Strategy.ANDROID_XPATH, String.format("//android.widget.TextView[@content-desc=\"Product Title\" and @text=\"%s\")]/following-sibling::android.widget.TextView", productName))
-        );
+    public Element priceOfProduct(String productName) {
+        return new Element(String.format("priceOfProduct %s", productName), List.of(
+                new Locator(Strategy.ANDROID_XPATH, String.format("//android.widget.TextView[@content-desc=\"Product Title\" and @text=\"%s\"] /following-sibling::android.widget.TextView", productName))
+        ));
     }
 
-    public List<Locator> sortTitle = List.of(
-            new Locator(Strategy.ANDROID_ID,"com.saucelabs.mydemoapp.android:id/sortTV")
-    );
+    public Element sortTitle = new Element("sortTitle", List.of(
+            new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/sortTV")
+    ));
 
-    public List<Locator> sortingOptions(String type,String order)
-    {
-        return List.of(
-                new Locator(Strategy.ANDROID_XPATH,String.format("//android.widget.TextView[contains(@text, %s\"%s\") and contains(@text, \"%s\")]", type, order))
-        );
+    public Element sortingOptions(String type, String order) {
+        return new Element(String.format("sortingOptions %s %s", type, order), List.of(
+                new Locator(Strategy.ANDROID_XPATH, String.format("//android.widget.TextView[contains(@text, \"%s\") and contains(@text, \"%s\")]", type, order))
+        ));
     }
 }
