@@ -113,9 +113,10 @@ public class Context {
      */
     public void setTestData(String key, Object value) {
         logger.debug("Setting test data for key '{}': {}", key, value);
-        Map<String, Object> newData = new HashMap<>(testData.get()); // Copy existing data
+        /*Map<String, Object> newData = new HashMap<>(testData.get()); // Copy existing data
         newData.put(key, value); // Add new data
-        testData.set(newData); // Replace the entire Map in ThreadLocal
+        testData.set(newData); // Replace the entire Map in ThreadLocal*/
+        testData.get().put(key, value);
     }
 
     /**
@@ -191,6 +192,7 @@ public class Context {
     public void destroy() {
         removeDriver();
         removeConfiguration();
+        clearTestData();
         clearAttributes();
     }
 }

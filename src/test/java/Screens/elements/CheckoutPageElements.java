@@ -1,8 +1,6 @@
 package Screens.elements;
 
-import Utils.Locator.Element;
-import Utils.Locator.Locator;
-import Utils.Locator.Strategy;
+import Utils.Locator.*;
 
 import java.util.List;
 
@@ -51,55 +49,55 @@ public class CheckoutPageElements {
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/zipErrorTV")
     ));
 
-    public Element countryInput = new Element("countryInput", List.of(
+    public Element countryInput = new Element("country Input", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/countryET")
     ));
 
-    public Element countryErrorLabel = new Element("countryErrorLabel", List.of(
+    public Element countryErrorLabel = new Element("country Error Label", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/countryErrorTV")
     ));
 
-    public Element checkoutPaymentButton = new Element("checkoutPaymentButton", List.of(
+    public Element checkoutPaymentButton = new Element("checkout Payment Button", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/checkoutTitleTV")
     ));
 
-    public Element cardFullNameInput = new Element("cardFullNameInput", List.of(
+    public Element cardFullNameInput = new Element("card FullName Input", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/nameET")
     ));
 
-    public Element cardNumberInput = new Element("cardNumberInput", List.of(
+    public Element cardNumberInput = new Element("card Number Input", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/cardNumberET")
     ));
 
-    public Element cardExpirationDateInput = new Element("cardExpirationDateInput", List.of(
+    public Element cardExpirationDateInput = new Element("card Expiration Date Input", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/expirationDateET")
     ));
 
-    public Element cardSecurityCodeInput = new Element("cardSecurityCodeInput", List.of(
+    public Element cardSecurityCodeInput = new Element("card Security Code Input", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/securityCodeET")
     ));
 
-    public Element cardPaymentButton = new Element("cardPaymentButton", List.of(
+    public Element cardPaymentButton = new Element("card Payment Button", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/paymentBtn")
     ));
 
-    public Element billingAddressCheckBox = new Element("billingAddressCheckBox", List.of(
+    public Element billingAddressCheckBox = new Element("billing Address CheckBox", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/billingAddressCB")
     ));
 
-    public Element reviewYourOrderLabel = new Element("reviewYourOrderLabel", List.of(
+    public Element reviewYourOrderLabel = new Element("review Your Order Label", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/enterShippingAddressTV")
     ));
 
-    public Element checkoutCompleteLabel = new Element("checkoutCompleteLabel", List.of(
+    public Element checkoutCompleteLabel = new Element("checkout Complete Label", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/completeTV")
     ));
 
-    public Element statusLabel = new Element("statusLabel", List.of(
+    public Element statusLabel = new Element("status Label", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/swagTV")
     ));
 
-    public Element continueShoppingLabel = new Element("continueShoppingLabel", List.of(
+    public Element continueShoppingLabel = new Element("continue Shopping Label", List.of(
             new Locator(Strategy.ANDROID_ID, "com.saucelabs.mydemoapp.android:id/shoopingBt")
     ));
 }

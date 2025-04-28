@@ -60,19 +60,16 @@ public class ScreenshotManager {
         // Choose name based on trigger
         String name;
         if (trigger == ScreenshotTrigger.ON_EVERY_STEP) {
-            name = StepListener.step.getText();  // Thread-safe method
-            System.out.println("###############################################"+name+"###############################################");
+            name = StepListener.stepName;  // Thread-safe method
         } else {
             name = scenario.getName();
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+name+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
         }
 
         name = sanitizeName(name);
 
         // Rest of the storage logic...
         if (storage == ScreenshotStorage.LOCAL || storage == ScreenshotStorage.BOTH) {
-            saveToDisk(name, screenshot);
+            saveToDisk(scenario.getName(), name, screenshot);
         }
 
         if (storage == ScreenshotStorage.REPORT || storage == ScreenshotStorage.BOTH) {
@@ -81,10 +78,10 @@ public class ScreenshotManager {
     }
 
     // Private: Save to filesystem with organized structure
-    private void saveToDisk(String name, byte[] screenshot) {
+    private void saveToDisk(String scenarioname ,String name, byte[] screenshot) {
         try {
             String timestamp = LocalDateTime.now()
-                    .format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS"));
+                    .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS"));
 
             // Include scenario name + step name (if applicable) in filename
             String fileName = String.format("%s_%s.png",
@@ -94,7 +91,7 @@ public class ScreenshotManager {
 
             Path outputPath = Paths.get(
                     context.getConfiguration().getScreenShotConfiguration().getScreenshotDirectory(),
-                    LocalDate.now().toString(),
+                    scenarioname+LocalDate.now().toString(),
                     fileName
             );
 

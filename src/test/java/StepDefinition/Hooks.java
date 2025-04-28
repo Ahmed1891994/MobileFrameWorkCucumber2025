@@ -66,9 +66,6 @@ public class Hooks {
         logger.info("Completed execution of scenario: {}", scenario.getName());
         driver = context.getDriver();
         if (driver != null) {
-            if (scenario.isFailed()) {
-                screenshotManager.captureIfRequired(scenario);
-            }
             driver.quit();
         }
 

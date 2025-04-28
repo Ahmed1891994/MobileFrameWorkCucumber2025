@@ -9,14 +9,18 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(
         glue = "StepDefinition", // Package containing step definitions
         features = "src/test/resources/Feature", // Path to feature files
+        tags = "@only",
         plugin = {
                 "pretty", // Pretty formatting for console output
                 "summary", // Summary of test results
                 "html:target/cucumber/report.html", // HTML report
                 "json:target/cucumber/report.json", // JSON report
-                "junit:target/cucumber/report.xml" // JUnit XML report
+                "junit:target/cucumber/report.xml", // JUnit XML report
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm", //ALlure Report
+                "Utils.helpers.StepListener"
         }
 )
+
 public class CucumberRunnerTest extends AbstractTestNGCucumberTests {
     private static final Logger logger = LoggerFactory.getLogger(CucumberRunnerTest.class);
 

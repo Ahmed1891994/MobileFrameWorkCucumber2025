@@ -6,6 +6,7 @@ Feature: Login
     When User presses burger button
     And User presses on Log In in menu side
 
+    @only
   Scenario: user login with valid STANDARD data
     When user login with valid VALID_STANDARD credentials
     Then User is in Catalog Page
